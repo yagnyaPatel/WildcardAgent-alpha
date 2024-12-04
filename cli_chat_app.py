@@ -7,17 +7,18 @@ import ssl
 import certifi
 import os
 from typing import Optional
+import dotenv
+
+dotenv.load_dotenv()
 
 # Generate a unique thread_id
 def generate_thread_id():
     return str(uuid.uuid4())
 
 # Configuration
-class Settings:
-    serverUrl = os.getenv("SERVER_URL").replace("https://", "")
-    wsUrl = "wss://" + str.join("/", [serverUrl, "ws"])
-
-settings = Settings()
+serverUrl = os.getenv("SERVER_URL")
+serverUrl = serverUrl.replace("https:", "wss:")
+wsUrl = str.join("/", [serverUrl, "ws/"])
 
 # Global flag to track if we're waiting for a response
 waiting_for_response = False
@@ -77,10 +78,9 @@ async def main():
     thread_id = generate_thread_id()
     print(f"Starting chat session with thread_id: {thread_id}\n")
 
-    uri = f"{settings.wsUrl}{thread_id}"
+    uri = f"{wsUrl}{thread_id}"
     try:
         ssl_context = ssl.create_default_context(cafile=certifi.where())
-        
         async with websockets.connect(uri=uri, ssl=ssl_context) as websocket:
             print("Connected to WebSocket. You can start typing your messages.\n")
 

@@ -20,15 +20,11 @@ def get_agent():
     # Create the ToolSearchClient
     tool_search_client = ToolSearchClient(api_key='alpha-api-access')
     
-    # Register necessary API authentications
-    tool_search_client.register_api_auth(
-        APIService.NEW_YORK_TIMES,
-        ApiKeyAuthConfig(type=AuthType.API_KEY, key_value=os.getenv("NYT_API_KEY"))
-    )
-    tool_search_client.register_api_auth(
-        APIService.SLACK, 
-        BearerAuthConfig(type=AuthType.BEARER, token=os.getenv("SLACK_API_KEY"))
-    )
+    # Register necessary API authentications if you have them
+    # tool_search_client.register_api_auth(
+    #     APIService.NEW_YORK_TIMES,
+    #     ApiKeyAuthConfig(type=AuthType.API_KEY, key_value=os.getenv("NYT_API_KEY"))
+    # )
     
     # Initialize the agent
     openai_api_key = os.getenv("OPENAI_API_KEY")
