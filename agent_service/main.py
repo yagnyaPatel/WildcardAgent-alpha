@@ -4,9 +4,6 @@ from .agent import get_agent
 from typing import Any, Dict, List, Optional, Tuple
 from urllib.parse import urljoin
 from pydantic import BaseModel
-import asyncio
-import copy
-import httpx
 import json
 import os
 
@@ -28,14 +25,13 @@ app = FastAPI()
 # Configure CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # TODO: Adjust as necessary for security
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
 # Thread ID -> (agent, initial_state, tool_search_client)
-# TODO: This should only need to be at the user level, not thread level
 agentMap: Dict[str, Tuple[CompiledGraph, DynamicToolSelectState, ToolSearchClient]] = {} 
 
 # Initialize ConnectionManager
@@ -49,11 +45,11 @@ class RunAgentRequest(BaseModel):
 class RunAgentResponse(BaseModel):
     messages: List[BaseMessage]
     wildcard_event: Optional[Dict[WildcardEvent, Any]]
-    
+
 def register_new_agent(thread_id: str):
     agent, initial_state, tool_search_client = get_agent()
     agentMap[thread_id] = (agent, initial_state, tool_search_client)
-    
+
 def find_agent_info(thread_id: str, allow_register: bool = False):
     agent_info = agentMap.get(thread_id, None)
     if agent_info is None and allow_register:
