@@ -4,7 +4,3 @@ websockets
 PyYAML
 pydantic
 python-dotenv
-
--i https://test.pypi.org/simple/
---extra-index-url https://pypi.org/simple/
-wildcard-langgraph
