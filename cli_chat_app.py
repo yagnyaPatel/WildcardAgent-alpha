@@ -12,6 +12,13 @@ from typing import Optional
 def generate_thread_id():
     return str(uuid.uuid4())
 
+# Configuration
+class Settings:
+    serverUrl = os.getenv("SERVER_URL").replace("https://", "")
+    wsUrl = "wss://" + str.join("/", [serverUrl, "ws"])
+
+settings = Settings()
+
 # Global flag to track if we're waiting for a response
 waiting_for_response = False
 
@@ -101,10 +108,3 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
-
-# Configuration
-class Settings:
-    serverUrl = os.getenv("SERVER_URL")
-    wsUrl = str.join("/", [serverUrl, "agent", "ws"])
-
-settings = Settings()

@@ -82,10 +82,6 @@ async def process_agent_request(request: RunAgentRequest) -> RunAgentResponse:
         all_states = [state async for state in state_history]
         
         print(f"All states:", all_states)
-        # replay_checkpoint = all_states[-2]
-        # print(f"Replay checkpoint:", replay_checkpoint)
-        # config = replay_checkpoint.config
-        # config = await agent.aupdate_state(replay_checkpoint.config, { **replay_checkpoint.values, "tool_search_client": tool_search_client})
         await agent.aupdate_state(config, {"tool_search_client": tool_search_client})
         state = None
         
