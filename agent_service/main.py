@@ -1,5 +1,5 @@
-from .ConnectionManager import ConnectionManager
-from .agent import get_agent
+from utils.ConnectionManager import ConnectionManager
+from agent import get_agent
 
 from typing import Any, Dict, List, Optional, Tuple
 from urllib.parse import urljoin
