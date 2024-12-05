@@ -208,6 +208,7 @@ async def websocket_endpoint(websocket: WebSocket, thread_id: str):
 
                     # Process the agent request and send back the response
                     response = await process_agent_request(run_request)
+                    print(f"RESPONSE: {response}")
                     await manager.send_message(thread_id, response.model_dump_json())
                 elif event == "resume_execution":
                     run_request = RunAgentRequest(

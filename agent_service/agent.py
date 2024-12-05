@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
 from langchain_core.messages import AIMessage, ToolMessage, BaseMessage
 
-# [1] Wildcard companiion packages are imported here. Since we're using langgraph, we need to import the langgraph package
+# [1] Wildcard companion packages are imported here. Since we're using langgraph, we need to import the langgraph package
 from wildcard_core.tool_registry.tools.rest_api.types import ApiKeyAuthConfig, BearerAuthConfig, AuthType
 from wildcard_core.tool_search.utils.api_service import APIService
 from wildcard_langgraph import create_tool_selection_agent
@@ -35,6 +35,6 @@ def get_agent():
     task_system_prompt = """You are an autonomous personal assistant.
     """
 
-    # [6] Create the agent!
+    # [6] Create the agent enabled with our tool search client.
     agent, initial_state = create_tool_selection_agent(model, tool_search_client, task_system_prompt)
     return agent, initial_state, tool_search_client
