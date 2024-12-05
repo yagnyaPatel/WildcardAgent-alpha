@@ -98,6 +98,7 @@ async def main():
             # Start listening to incoming messages
             listen_task = asyncio.create_task(listen_messages(websocket))
             symbols = ["|", "/", "-", "\\"]
+            i = 0
 
             while True:
                 if not waiting_for_response:
@@ -117,12 +118,14 @@ async def main():
                     sys.stdout.write("\r" + symbols[i % 4] + " Waiting for response...")
                     sys.stdout.flush()
                     time.sleep(0.2)
+                    i += 1
 
     except Exception as e:
         print(f"Failed to connect to WebSocket: {e}")
 
 class MessageType(Enum):
     AI = "ai"
+    CHAT = "chat"
     TOOL = "tool" # tool response from the api
     HUMAN = "human"
 
